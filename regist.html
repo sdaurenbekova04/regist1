@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>regist</title>
+    <style>
+        .img1 {
+            width: 30px;
+            height: 40px;
+        }
+        .navbar {
+            width: 100%;
+            height: 30px;
+            list-style-type: none; 
+            align-items: center;
+            margin-left: 200px;
+        }
+        .navbar a {
+        margin-left: 30px;
+        }
+        a {
+            text-decoration: none;
+        }
+        hr {
+            width: 100%;
+            height: 2px;
+            background-color: black;
+        }
+        
+            </style>
+</head>
+<body>
+<header>
+    <div class="navbar">
+    <ul>
+    <a href="index.html"><img src="img/img1.png"></a>
+    <a href="https://www.ivi.ru/">Главная</a>
+    <a href="https://www.ivi.ru/collections/best-drama">Лучшие драмы</a>
+    <a href="https://www.ivi.ru/collections/movies-action-packed">Остросюжетные фильмы</a>
+    <a href="https://www.ivi.ru/collections/serialyi-amediateka">Сериалы Amediateka</a>
+    <!-- <a href="vhod.html">
+         <input type="button" onclick="rem()" id="test1" value="Войти">
+    </a>
+    <a href="regist.html">
+        <input type="button" onclick="regist()" id="test2" value="Зарегистрироваться">
+    </a> -->
+     
+    </ul>
+</div>
+<hr>
+</header>
+<body bgcolor="#FFC0CB"></body>
+<p id="error" id = "error"></p>
+<center><h1>Зарегистрируйтесь</h1></center>
+<p>Введите логин:</p>
+<input type="text" id="name1">
+<p>Введите пароль:</p>
+<input type="password" id="password1">
+<p>Введите повторно свой пароль:</p>
+<input type="password" id="password2">
+<br>
+<input type="button" onclick="regist()" id="test2" value="Зарегистрироваться">
+<h1 id="active_name"></h1>
+<br>
+<h2>Есть уже аккаунт?</h2>
+<a href="vhod.html">
+    <input type="button" onclick="welcome()" id="test1" value="Войти">
+</a>
+</body>
+
+<script>
+function regist () {
+    let name1 = document.getElementById ('name1').value;
+        let password1 = document.getElementById ('password1').value;
+        let password2 = document.getElementById ('password2').value;
+    if(localStorage.getItem (name1) == null) {
+    
+    if (name1.length >= 2) {
+    
+    if (password1.length  >= 8) {
+    
+    if (password1 == password2) {
+        let new_user = {
+        user_name: name1,
+        user_password: password1
+}
+    localStorage.setItem (new_user.user_name, JSON.stringify (new_user));
+    localStorage.setItem ("active_user", new_user.user_name)
+    document.getElementById ('active_name').textContent = localStorage ['active_user']
+    console.log (' Новый пользователь добавлен ')
+    // document.location.href = "vhod.html";
+    let user_obj = localStorage.getItem (new_user.user_name);
+    let user = JSON.parse (user_obj)
+    // console.log (user_password)
+}
+
+
+
+    else {
+        console.log (' Пароли должны сопадать ')
+    }
+}
+
+    else {
+        console.log (' Логин должен быть длиннее 2 символов ')
+      }
+}
+
+    else {
+        console.log (' Password дожен быть длиннее 8 символов ' )
+     }
+}
+
+    else {
+        console.log (' Данный пользователь уже есть ')
+     }
+} 
+
+
+function rem () {
+    localStorage.removeItem ('active_user')
+    document.getElementById ("active_name").textContent = ' '
+}
+    
+function welcome () {
+        let name1 = document.getElementById ('name1').value;
+        let password1 = document.getElementById ( 'password1').value;
+   
+        if (localStorage.getItem (name1) != null) {
+            let user_obj = localStorage.getItem (name1)
+            let user = JSON.parse (user_obj)
+            console.log (' Данный пользователь уже есть')
+            console.log (user.user_password)
+
+        if(user.user_password == password1) {    
+            document.location.href = "index.html";
+            localStorage.setItem ('active_user',user.user_name )
+            document.getElementById ("active_name").textContent = localStorage['active_user']
+        }
+else {
+     console.log (' Неверный пароль ')
+    }
+}
+
+
+else {
+    console.log ( 'Такого пользователя нет ')
+}
+}
+
+
+</script>
+</html>
